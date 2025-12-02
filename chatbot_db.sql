@@ -1,0 +1,26 @@
+CREATE DATABASE IF NOT EXISTS chatbot_db;
+USE chatbot_db;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  passwordHash VARCHAR(255) NOT NULL,
+  fullName VARCHAR(100),
+  email VARCHAR(100)
+);
+
+CREATE TABLE chat_sessions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  userId INT,
+  startedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (userId) REFERENCES users(id)
+);
+
+CREATE TABLE messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  userId INT,
+  text TEXT,
+  sender VARCHAR(10),
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (userId) REFERENCES users(id)
+);
